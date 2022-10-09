@@ -141,6 +141,10 @@ local private = {
       [L["Physical DPS"]] = {"MELEE", "PHYS_DPS"},
       [L["Tank"]] = {"MELEE", "TANK"},
     },
+    ["DEATHKNIGHT"] = {
+      [L["Physical DPS"]] = {"MELEE", "PHYS_DPS"},
+      [L["Tank"]] = {"MELEE", "TANK"},
+    },
   },
   classRoleIcons = {
     ["DRUID"] = {
@@ -178,6 +182,10 @@ local private = {
     ["WARRIOR"] = {
       [L["Physical DPS"]] = {1, "Interface\\Icons\\Ability_warrior_innerrage"},
       [L["Tank"]] = {2, "Interface\\Icons\\Ability_warrior_defensivestance"},
+    },
+    ["DEATHKNIGHT"] = {
+      [L["Physical DPS"]] = {1, "Interface\\Icons\\spell_deathknight_frostpresence"},
+      [L["Tank"]] = {2, "Interface\\Icons\\spell_deathknight_bloodpresence"},
     },
   },
   softPass = false,

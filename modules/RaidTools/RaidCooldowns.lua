@@ -29,18 +29,45 @@ local private = {
   raidCooldownsList = {
 --    ["MAGE"] = {{12051}, {120, 8492, 10159, 10160, 10161}, {122, 865, 6131, 10230}}, -- FOR TESTING ONLY!
 --    ["HUNTER"] = {{19263}, {1499, 14310, 14311}, {20906}}, -- FOR TESTING ONLY! Deterrence, Freezing Trap
-    ["DRUID"] = {{29166}, {20484, 20739, 20742, 20747, 20748, 26994}}, -- Innervate, Rebirth
-    ["PALADIN"] = {{19752}, {642, 1020}, {1022, 5599, 10278}, {633, 2800, 10310, 27154}}, -- DI, DS, BoP, LoH
-    ["PRIEST"] = {{10060}}, -- Power Infusion
-    ["WARLOCK"] = {{20707, 20762, 20763, 20764, 20765, 27239}}, -- SS
-    ["WARRIOR"] = {{871}, {12975}, {1161}}, -- Shield Wall, Last Stand, Challenging Shout
-    ["SHAMAN"] = {{2825}, {32182}, {16190}, {20608}}, -- Bloodlust, Heroism, Mana Tide, Reincarnation
+
+    ["DRUID"] = {
+      {29166}, -- Innervate
+      {20484, 20739, 20742, 20747, 20748, 26994, 48477}, -- Rebirth
+    },
+
+    ["PALADIN"] = {
+      {19752}, -- Divine Intervention
+      {642}, -- Divine Shield
+      {1022, 5599, 10278}, -- Hand of Protection
+      {633, 2800, 10310, 27154, 48788} -- Lay on Hands
+    },
+
+    ["PRIEST"] = {
+      {10060}, -- Power Infusion
+    },
+
+    ["WARLOCK"] = {
+      {20707, 20762, 20763, 20764, 20765, 27239, 47883}, -- Soulstone Resurrection
+    },
+
+    ["WARRIOR"] = {
+      {871}, -- Shield Wall
+      {12975}, -- Last Stand
+      {1161}, -- Challenging Shout
+    }, --
+
+    ["SHAMAN"] = {
+      {2825}, -- Bloodlust
+      {32182}, -- Heroism
+      {16190}, -- Mana Tide
+      {20608}, -- Reincarnation
+    },
   },
   wipeProtectionsList = {
 --    ["HUNTER"] = 20906, -- FOR TESTING ONLY!
-    ["DRUID"] = 26994, -- Rebirth
-    ["PALADIN"] = 19752, -- DI
-    ["WARLOCK"] = 27239, -- SS
+    ["DRUID"] = 48477, -- Rebirth
+    ["PALADIN"] = 19752, -- Divine Intervetion
+    ["WARLOCK"] = 47883, -- Soulstone Resurrection
 --    ["SHAMAN"] = 20608, -- Reincarnation -- Uses simplified logic
   },
   trackedProtection = nil,
@@ -97,9 +124,15 @@ function RaidCooldowns:OnAddonLoad()
     -- Setup cooldown tracking
     for _, cooldownGroup in ipairs(private.raidCooldownsList[DataManager.GetSelfClass()]) do
       for _, spellId in ipairs(cooldownGroup) do
-        private.trackedCooldowns[spellId] = true
-        private.trackedCooldownsDecoder[spellId] = cooldownGroup[#cooldownGroup]
-        private.trackedCooldownsDurations[spellId] = GetSpellBaseCooldown(spellId) / 1000
+        local baseCooldown = GetSpellBaseCooldown(spellId)
+
+        if baseCooldown then
+          private.trackedCooldowns[spellId] = true
+          private.trackedCooldownsDecoder[spellId] = cooldownGroup[#cooldownGroup]
+          private.trackedCooldownsDurations[spellId] = baseCooldown / 1000
+        else
+          print("BPGP: invalid cooldown spell id", spellId)
+        end
       end
     end
 --    private.trackedCooldownsDurations[20906] = 1800
