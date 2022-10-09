@@ -1,0 +1,115 @@
+## Interface: 20502
+## Title: BPGP Loot System
+## Notes: Boss Points / Gear Points Loot System
+## Author: Spectrum
+## Version: 1.2.3
+## SavedVariables: BPGP_DB
+## OptionalDeps: Ace3
+## X-Embeds: Ace3, LibDataBroker, LibDBIcon, LibDeformat, LibDialog, LibJSON, LibDeflate
+## X-Category: Guild
+
+libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+
+libs\AceComm-3.0\AceComm-3.0.xml
+libs\AceConsole-3.0\AceConsole-3.0.xml
+libs\AceDB-3.0\AceDB-3.0.xml
+libs\AceGUI-3.0\AceGUI-3.0.xml
+libs\AceHook-3.0\AceHook-3.0.xml
+libs\AceLocale-3.0\AceLocale-3.0.xml
+libs\AceTimer-3.0\AceTimer-3.0.xml
+
+libs\AceConfig-3.0\AceConfig-3.0.xml
+libs\AceConfig-3.0\AceConfigCmd-3.0\AceConfigCmd-3.0.xml
+libs\AceConfig-3.0\AceConfigDialog-3.0\AceConfigDialog-3.0.xml
+libs\AceConfig-3.0\AceConfigRegistry-3.0\AceConfigRegistry-3.0.xml
+
+locale\localization.xml
+
+libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+libs\LibDBIcon-1.0\lib.xml
+libs\LibDeformat-3.0\lib.xml
+libs\LibDialog-1.0\lib.xml
+libs\LibJSON-1.0\lib.xml
+libs\LibDeflate-1.0\LibDeflate-1.0.lua
+
+core\Debugger.lua
+core\EventManager.lua
+core\Core.lua
+core\libs\Common.lua
+core\libs\Coroutine.lua
+core\libs\Encryption.lua
+core\libs\Storage.lua
+
+BPGP-Loot-System.lua
+
+modules\SystemManager\SystemManager.lua
+
+modules\AnnounceSender.lua
+
+modules\DataManager\DataBroker.lua
+modules\DataManager\DataManager.lua
+modules\Logger\Logger.lua
+modules\DataManager\DMSelfDB.lua
+modules\DataManager\DMGuildDB.lua
+modules\DataManager\DMRaidDB.lua
+modules\DataManager\DMSettingsDB.lua
+modules\DataManager\DMPlayersDB.lua
+modules\DataManager\DMBatches.lua
+modules\DataManager\DMCommands.lua
+
+modules\Logger\LogRecord.lua
+modules\Logger\DBRecord.lua
+modules\Logger\LoggerModel.lua
+modules\Logger\LoggerImportExport.lua
+
+modules\MasterLooter\MasterLooter.lua
+modules\MasterLooter\RollTracker.lua
+modules\MasterLooter\DistributionTracker.lua
+modules\MasterLooter\BossTracker.lua
+modules\MasterLooter\LootTracker.lua
+modules\MasterLooter\StandbyTracker.lua
+modules\StandingsManager.lua
+
+modules\RaidTools\ChecksManager.lua
+modules\RaidTools\RaidCooldowns.lua
+modules\RaidTools\MaggyHelper.lua
+modules\RaidTools\VashjHelper.lua
+
+modules\Warnings.lua
+
+modules\GUI\GUI.lua
+
+modules\GUI\Popups\Warning.lua
+modules\GUI\Popups\Service.lua
+modules\GUI\Popups\Rescaling.lua
+modules\GUI\Popups\Resetting.lua
+modules\GUI\Popups\BossTracking.lua
+modules\GUI\Popups\LootTracking.lua
+
+modules\GUI\SideframeBPGP.lua
+modules\GUI\AddNewItemFrame.lua
+modules\GUI\DistributionStartFrame.lua
+modules\GUI\RaidTools\CooldownsFrame.lua
+modules\GUI\RaidTools\WipeProtectionFrame.lua
+modules\GUI\RaidTools\MaggyHelperFrame.lua
+modules\GUI\RaidTools\VashjHelperFrame.lua
+modules\GUI\SideframeOptions.lua
+modules\GUI\SideframeStats.lua
+modules\GUI\SideframeTools.lua
+modules\GUI\SideframeLoot.lua
+modules\GUI\DataExportFrame.lua
+modules\GUI\DataImportFrame.lua
+modules\GUI\SideframeLog.lua
+modules\GUI\LootPopupCommentsImport.lua
+modules\GUI\OngoingDistributionFrame.lua
+modules\GUI\WishlistImport.lua
+modules\GUI\MainFrame.lua
+
+modules\OptionsManager\OptionsManager.lua
+modules\OptionsManager\GUIOptions.lua
+modules\OptionsManager\SMOptions.lua
+modules\OptionsManager\DMOptions.lua
+modules\OptionsManager\MLOptions.lua
+
+# tests\BPGPUnitTests-1.0.xml
