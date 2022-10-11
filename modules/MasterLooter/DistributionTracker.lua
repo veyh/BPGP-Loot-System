@@ -7,6 +7,11 @@ local DLG = LibStub("LibDialog-1.0")
 local LibDeformat = LibStub("LibDeformat-3.0")
 LibStub("AceComm-3.0"):Embed(DistributionTracker)
 
+local tocNumber = select(4, GetBuildInfo())
+local isClassicVanilla = (10000 <= tocNumber and tocNumber <= 19999)
+local isClassicTBC = (20000 <= tocNumber and tocNumber <= 29999)
+local isClassicWrath = (30000 <= tocNumber and tocNumber <= 39999)
+
 local Debugger = BPGP.Debugger
 local Common = BPGP.GetLibrary("Common")
 local Coroutine = BPGP.GetLibrary("Coroutine")
@@ -49,14 +54,17 @@ local private = {
     ["ITEM_MOD_ARMOR_PENETRATION_RATING_SHORT"] = L["Armor Pen"],
     ["ITEM_MOD_ATTACK_POWER_SHORT"] = L["Attack Power"],
     ["ITEM_MOD_BLOCK_RATING"] = L["Block"],
-    ["ITEM_MOD_CRIT_RATING"] = L["Phys Crit"],
+    ["ITEM_MOD_CRIT_MELEE_RATING"] = L["Phys Crit"],
+    ["ITEM_MOD_CRIT_RATING"] = L["Crit"],
     ["ITEM_MOD_CRIT_SPELL_RATING"] = L["Spell Crit"],
     ["ITEM_MOD_DEFENSE_SKILL_RATING"] = L["Defense"],
     ["ITEM_MOD_DODGE_RATING"] = L["Dodge"],
     ["ITEM_MOD_EXPERTISE_RATING"] = L["Expertise"],
-    ["ITEM_MOD_HASTE_RATING"] = L["Phys Haste"],
+    ["ITEM_MOD_HASTE_MELEE_RATING"] = L["Phys Haste"],
+    ["ITEM_MOD_HASTE_RATING"] = L["Haste"],
     ["ITEM_MOD_HASTE_SPELL_RATING"] = L["Spell Haste"],
-    ["ITEM_MOD_HIT_RATING"] = L["Phys Hit"],
+    ["ITEM_MOD_HIT_MELEE_RATING"] = L["Phys Hit"],
+    ["ITEM_MOD_HIT_RATING"] = L["Hit"],
     ["ITEM_MOD_HIT_SPELL_RATING"] = L["Spell Hit"],
     ["ITEM_MOD_MELEE_ATTACK_POWER_SHORT"] = L["Feral Power"],
     ["ITEM_MOD_PARRY_RATING"] = L["Parry"],
@@ -64,6 +72,7 @@ local private = {
     ["ITEM_MOD_SPELL_DAMAGE_DONE_SHORT"] = L["Spell Damage"],
     ["ITEM_MOD_SPELL_HEALING_DONE_SHORT"] = L["Healing Power"],
     ["ITEM_MOD_SPELL_PENETRATION_SHORT"] = L["Spell Pen"],
+    ["ITEM_MOD_SPELL_POWER"] = L["Spell Power"],
     ["ITEM_MOD_SPELL_POWER_SHORT"] = L["Spell Power"],
     ["ITEM_SPELL_TRIGGER_ONPROC"] = L["Chance on hit"],
   },
@@ -71,14 +80,29 @@ local private = {
     ["ITEM_MOD_ARMOR_PENETRATION_RATING_SHORT"] = {"PHYS_DPS", "TANK"}, -- Found on phys dps and some tank items
     ["ITEM_MOD_ATTACK_POWER_SHORT"] = {"PHYS_DPS"}, -- Found only on phys dps items
     ["ITEM_MOD_BLOCK_RATING"] = {"TANK"}, -- Found only on plate armor, driud tanks will auto-pass
-    ["ITEM_MOD_CRIT_RATING"] = {"PHYS_DPS"}, -- Found only on phys dps items
-    ["ITEM_MOD_CRIT_SPELL_RATING"] = {"SPELL_DPS", "HEALER", "SPELL_TANK"}, -- May be useful for prot pallies
+    ["ITEM_MOD_CRIT_MELEE_RATING"] = {"PHYS_DPS", "TANK"},
+    ["ITEM_MOD_CRIT_RATING"] =
+      (isClassicVanilla or isClassicTBC)
+        and {"PHYS_DPS", "TANK"}
+      or isClassicWrath
+        and {"PHYS_DPS", "TANK", "SPELL_DPS", "HEALER"},
+    ["ITEM_MOD_CRIT_SPELL_RATING"] = {"SPELL_DPS", "HEALER", "SPELL_TANK"},
     ["ITEM_MOD_DEFENSE_SKILL_RATING"] = {"TANK"}, -- Found only on tank items
     ["ITEM_MOD_DODGE_RATING"] = {"TANK"}, -- Found only on tank items
     ["ITEM_MOD_EXPERTISE_RATING"] = {"MELEE"}, -- Can't use PHYS_DPS 'cause of hunters
-    ["ITEM_MOD_HASTE_RATING"] = {"PHYS_DPS", "TANK"}, -- Found on phys dps and some tank items
+    ["ITEM_MOD_HASTE_MELEE_RATING"] = {"PHYS_DPS", "TANK"},
+    ["ITEM_MOD_HASTE_RATING"] =
+      (isClassicVanilla or isClassicTBC)
+        and {"PHYS_DPS", "TANK"}
+      or isClassicWrath
+        and {"PHYS_DPS", "TANK", "SPELL_DPS", "HEALER"},
     ["ITEM_MOD_HASTE_SPELL_RATING"] = {"SPELL_DPS", "HEALER"},
-    ["ITEM_MOD_HIT_RATING"] = {"PHYS_DPS", "TANK"}, -- Found on phys dps and some tank items
+    ["ITEM_MOD_HIT_MELEE_RATING"] = {"PHYS_DPS", "TANK"},
+    ["ITEM_MOD_HIT_RATING"] =
+      (isClassicVanilla or isClassicTBC)
+        and {"PHYS_DPS", "TANK"}
+      or isClassicWrath
+        and {"PHYS_DPS", "TANK", "SPELL_DPS"},
     ["ITEM_MOD_HIT_SPELL_RATING"] = {"SPELL_DPS"},
     ["ITEM_MOD_MELEE_ATTACK_POWER_SHORT"] = {"FERAL"}, -- Druids-only stat
     ["ITEM_MOD_PARRY_RATING"] = {"TANK"}, -- Found only on plate armor, driud tanks will auto-pass
@@ -86,6 +110,7 @@ local private = {
     ["ITEM_MOD_SPELL_DAMAGE_DONE_SHORT"] = {"SPELL_DPS", "HEALER"}, -- Dedicated spell schools & damage part of healing stat
     ["ITEM_MOD_SPELL_HEALING_DONE_SHORT"] = {"HEALER"},
     ["ITEM_MOD_SPELL_PENETRATION_SHORT"] = {"SPELL_DPS"},
+    ["ITEM_MOD_SPELL_POWER"] = {"SPELL_DPS", "SPELL_TANK"}, -- May be useful for prot pallies
     ["ITEM_MOD_SPELL_POWER_SHORT"] = {"SPELL_DPS", "SPELL_TANK"}, -- May be useful for prot pallies
     ["ITEM_SPELL_TRIGGER_ONPROC"] = {"PHYS_DPS", "TANK"}, -- Found on phys dps and some tank items
   },
@@ -231,17 +256,24 @@ function private.HandleAutoPassModeUpdate()
       private.softPass = false
     end
   end
+
   for itemStat, keywords in pairs(private.itemStatsKeywordBindings) do
-    local isWhitelisted = false
-    for _, keyword in ipairs(keywords) do
-      if private.classSpecKeywordsWhitelist[keyword] then
-        isWhitelisted = true
-      end
-    end
-    if not isWhitelisted then
+    if type(keywords) == "table"
+    and not private.isAnySpecKeywordWhitelisted(keywords)
+    then
       private.itemStatsBlacklist[itemStat] = true
     end
   end
+end
+
+function private.isAnySpecKeywordWhitelisted(keywords)
+  for _, keyword in ipairs(keywords) do
+    if private.classSpecKeywordsWhitelist[keyword] then
+      return true
+    end
+  end
+
+  return false
 end
 
 function private.HandleDistributionStartComm(prefix, message, distribution, sender)
