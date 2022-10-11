@@ -110,8 +110,16 @@ local private = {
     ["ITEM_MOD_SPELL_DAMAGE_DONE_SHORT"] = {"SPELL_DPS", "HEALER"}, -- Dedicated spell schools & damage part of healing stat
     ["ITEM_MOD_SPELL_HEALING_DONE_SHORT"] = {"HEALER"},
     ["ITEM_MOD_SPELL_PENETRATION_SHORT"] = {"SPELL_DPS"},
-    ["ITEM_MOD_SPELL_POWER"] = {"SPELL_DPS", "SPELL_TANK"}, -- May be useful for prot pallies
-    ["ITEM_MOD_SPELL_POWER_SHORT"] = {"SPELL_DPS", "SPELL_TANK"}, -- May be useful for prot pallies
+    ["ITEM_MOD_SPELL_POWER"] =
+      (isClassicVanilla or isClassicTBC)
+        and {"SPELL_DPS", "SPELL_TANK"}
+      or isClassicWrath
+        and {"HEALER", "SPELL_DPS", "SPELL_TANK"},
+    ["ITEM_MOD_SPELL_POWER_SHORT"] =
+      (isClassicVanilla or isClassicTBC)
+        and {"SPELL_DPS", "SPELL_TANK"}
+      or isClassicWrath
+        and {"HEALER", "SPELL_DPS", "SPELL_TANK"},
     ["ITEM_SPELL_TRIGGER_ONPROC"] = {"PHYS_DPS", "TANK"}, -- Found on phys dps and some tank items
   },
   -- Auto-pass is blacklist based:
