@@ -46,60 +46,48 @@ local private = {
   priorities = {1, 1, 2, 4, 5, 3},
   distributionStartFormat = "%d\31%s\31%s",
   itemStatsKeywordWordings = {
+    ["ITEM_MOD_ARMOR_PENETRATION_RATING_SHORT"] = L["Armor Pen"],
+    ["ITEM_MOD_ATTACK_POWER_SHORT"] = L["Attack Power"],
+    ["ITEM_MOD_BLOCK_RATING"] = L["Block"],
+    ["ITEM_MOD_CRIT_RATING"] = L["Phys Crit"],
+    ["ITEM_MOD_CRIT_SPELL_RATING"] = L["Spell Crit"],
     ["ITEM_MOD_DEFENSE_SKILL_RATING"] = L["Defense"],
     ["ITEM_MOD_DODGE_RATING"] = L["Dodge"],
-    ["ITEM_MOD_PARRY_RATING"] = L["Parry"],
-    ["ITEM_MOD_BLOCK_RATING"] = L["Block"],
-    
-    ["ITEM_MOD_HASTE_RATING"] = L["Phys Haste"],
-    ["ITEM_MOD_HIT_RATING"] = L["Phys Hit"],
-    ["ITEM_MOD_ARMOR_PENETRATION_RATING_SHORT"] = L["Armor Pen"],
-    ["ITEM_SPELL_TRIGGER_ONPROC"] = L["Chance on hit"],
-    
-    ["ITEM_MOD_ATTACK_POWER_SHORT"] = L["Attack Power"],
-    ["ITEM_MOD_CRIT_RATING"] = L["Phys Crit"],
-    
     ["ITEM_MOD_EXPERTISE_RATING"] = L["Expertise"],
-    
-    ["ITEM_MOD_MELEE_ATTACK_POWER_SHORT"] = L["Feral Power"],
-
-    ["ITEM_MOD_POWER_REGEN0_SHORT"] = L["Mana Regen"],
-    
+    ["ITEM_MOD_HASTE_RATING"] = L["Phys Haste"],
+    ["ITEM_MOD_HASTE_SPELL_RATING"] = L["Spell Haste"],
+    ["ITEM_MOD_HIT_RATING"] = L["Phys Hit"],
     ["ITEM_MOD_HIT_SPELL_RATING"] = L["Spell Hit"],
+    ["ITEM_MOD_MELEE_ATTACK_POWER_SHORT"] = L["Feral Power"],
+    ["ITEM_MOD_PARRY_RATING"] = L["Parry"],
+    ["ITEM_MOD_POWER_REGEN0_SHORT"] = L["Mana Regen"],
+    ["ITEM_MOD_SPELL_DAMAGE_DONE_SHORT"] = L["Spell Damage"],
+    ["ITEM_MOD_SPELL_HEALING_DONE_SHORT"] = L["Healing Power"],
     ["ITEM_MOD_SPELL_PENETRATION_SHORT"] = L["Spell Pen"],
     ["ITEM_MOD_SPELL_POWER_SHORT"] = L["Spell Power"],
-    ["ITEM_MOD_SPELL_DAMAGE_DONE_SHORT"] = L["Spell Damage"],
-    ["ITEM_MOD_HASTE_SPELL_RATING"] = L["Spell Haste"],
-    ["ITEM_MOD_CRIT_SPELL_RATING"] = L["Spell Crit"],
-    ["ITEM_MOD_SPELL_HEALING_DONE_SHORT"] = L["Healing Power"],
+    ["ITEM_SPELL_TRIGGER_ONPROC"] = L["Chance on hit"],
   },
   itemStatsKeywordBindings = {
+    ["ITEM_MOD_ARMOR_PENETRATION_RATING_SHORT"] = {"PHYS_DPS", "TANK"}, -- Found on phys dps and some tank items
+    ["ITEM_MOD_ATTACK_POWER_SHORT"] = {"PHYS_DPS"}, -- Found only on phys dps items
+    ["ITEM_MOD_BLOCK_RATING"] = {"TANK"}, -- Found only on plate armor, driud tanks will auto-pass
+    ["ITEM_MOD_CRIT_RATING"] = {"PHYS_DPS"}, -- Found only on phys dps items
+    ["ITEM_MOD_CRIT_SPELL_RATING"] = {"SPELL_DPS", "HEALER", "SPELL_TANK"}, -- May be useful for prot pallies
     ["ITEM_MOD_DEFENSE_SKILL_RATING"] = {"TANK"}, -- Found only on tank items
     ["ITEM_MOD_DODGE_RATING"] = {"TANK"}, -- Found only on tank items
-    ["ITEM_MOD_PARRY_RATING"] = {"TANK"}, -- Found only on plate armor, driud tanks will auto-pass
-    ["ITEM_MOD_BLOCK_RATING"] = {"TANK"}, -- Found only on plate armor, driud tanks will auto-pass
-    
-    ["ITEM_MOD_HASTE_RATING"] = {"PHYS_DPS", "TANK"}, -- Found on phys dps and some tank items
-    ["ITEM_MOD_HIT_RATING"] = {"PHYS_DPS", "TANK"}, -- Found on phys dps and some tank items
-    ["ITEM_MOD_ARMOR_PENETRATION_RATING_SHORT"] = {"PHYS_DPS", "TANK"}, -- Found on phys dps and some tank items
-    ["ITEM_SPELL_TRIGGER_ONPROC"] = {"PHYS_DPS", "TANK"}, -- Found on phys dps and some tank items
-    
-    ["ITEM_MOD_ATTACK_POWER_SHORT"] = {"PHYS_DPS"}, -- Found only on phys dps items
-    ["ITEM_MOD_CRIT_RATING"] = {"PHYS_DPS"}, -- Found only on phys dps items
-    
     ["ITEM_MOD_EXPERTISE_RATING"] = {"MELEE"}, -- Can't use PHYS_DPS 'cause of hunters
-    
-    ["ITEM_MOD_MELEE_ATTACK_POWER_SHORT"] = {"FERAL"}, -- Druids-only stat
-
-    ["ITEM_MOD_POWER_REGEN0_SHORT"] = {"SPELL_DPS", "HEALER", "MANA_USER"}, -- Casters + some phys specs
-    
+    ["ITEM_MOD_HASTE_RATING"] = {"PHYS_DPS", "TANK"}, -- Found on phys dps and some tank items
+    ["ITEM_MOD_HASTE_SPELL_RATING"] = {"SPELL_DPS", "HEALER"},
+    ["ITEM_MOD_HIT_RATING"] = {"PHYS_DPS", "TANK"}, -- Found on phys dps and some tank items
     ["ITEM_MOD_HIT_SPELL_RATING"] = {"SPELL_DPS"},
+    ["ITEM_MOD_MELEE_ATTACK_POWER_SHORT"] = {"FERAL"}, -- Druids-only stat
+    ["ITEM_MOD_PARRY_RATING"] = {"TANK"}, -- Found only on plate armor, driud tanks will auto-pass
+    ["ITEM_MOD_POWER_REGEN0_SHORT"] = {"SPELL_DPS", "HEALER", "MANA_USER"}, -- Casters + some phys specs
+    ["ITEM_MOD_SPELL_DAMAGE_DONE_SHORT"] = {"SPELL_DPS", "HEALER"}, -- Dedicated spell schools & damage part of healing stat
+    ["ITEM_MOD_SPELL_HEALING_DONE_SHORT"] = {"HEALER"},
     ["ITEM_MOD_SPELL_PENETRATION_SHORT"] = {"SPELL_DPS"},
     ["ITEM_MOD_SPELL_POWER_SHORT"] = {"SPELL_DPS", "SPELL_TANK"}, -- May be useful for prot pallies
-    ["ITEM_MOD_SPELL_DAMAGE_DONE_SHORT"] = {"SPELL_DPS", "HEALER"}, -- Dedicated spell schools & damage part of healing stat
-    ["ITEM_MOD_HASTE_SPELL_RATING"] = {"SPELL_DPS", "HEALER"},
-    ["ITEM_MOD_CRIT_SPELL_RATING"] = {"SPELL_DPS", "HEALER", "SPELL_TANK"}, -- May be useful for prot pallies
-    ["ITEM_MOD_SPELL_HEALING_DONE_SHORT"] = {"HEALER"},
+    ["ITEM_SPELL_TRIGGER_ONPROC"] = {"PHYS_DPS", "TANK"}, -- Found on phys dps and some tank items
   },
   -- Auto-pass is blacklist based:
   -- Item stats without stated keywords will be blacklisted
