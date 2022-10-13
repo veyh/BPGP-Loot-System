@@ -2,7 +2,7 @@
 ## Title: BPGP Loot System
 ## Notes: Boss Points / Gear Points Loot System
 ## Author: Spectrum
-## Version: 1.2.6
+## Version: 1.2.7
 ## SavedVariables: BPGP_DB
 ## OptionalDeps: Ace3
 ## X-Embeds: Ace3, LibDataBroker, LibDBIcon, LibDeformat, LibDialog, LibJSON, LibDeflate
