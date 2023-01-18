@@ -23,8 +23,7 @@ function GUI.CreateBPGPLogFrame()
   f:SetHeight(465)
 
   f:SetResizable(true)
-  f:SetMinResize(550, 465)
-  f:SetMaxResize(700, 465)
+  BPGP.compat.SetResizeBounds(f, 550, 465, 700, 465)
 
   f:SetHeader(L["Personal Action Log"])
   

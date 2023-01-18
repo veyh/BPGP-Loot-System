@@ -109,7 +109,7 @@ function Debugger.CreateMainFrame()
   f:SetHeight(600)
 
   f:SetResizable(true)
-  f:SetMinResize(300, 100)
+  BPGP.compat.SetResizeBounds(f, 300, 100)
   
   f:SetBackdrop(
     {

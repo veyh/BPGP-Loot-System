@@ -33,6 +33,7 @@ libs\LibDialog-1.0\lib.xml
 libs\LibJSON-1.0\lib.xml
 libs\LibDeflate-1.0\LibDeflate-1.0.lua
 
+core\compat.lua
 core\Debugger.lua
 core\EventManager.lua
 core\Core.lua
